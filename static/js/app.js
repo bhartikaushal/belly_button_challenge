@@ -19,6 +19,7 @@ function init() {
   barChart(case_id);
   demographyData (case_id);
   bubbleChart(case_id);
+  d3.selectAll("#selDataset").on("change", updateData );
  });
 }
 //function to display the sample metadata, i.e., an individual's demographic information.
@@ -32,6 +33,7 @@ function demographyData(cases) {
     let demoDataList = demoData[0];
     //use d3 to select the html element for adding the demographic information
     d3.select("#sample-metadata").html("");
+    console.log(demoDataList)
     //add key values pairs for the demographic data
     Object.entries(demoDataList).forEach(([key,value]) => {
     d3.select("#sample-metadata").append("h5").text(`${key}:${value}`);  
@@ -95,7 +97,8 @@ function bubbleChart(cases) {
 }
 
 // funtion to update the dashboard when new info is provided
-function updateData(cases){
+function updateData(event){
+  let cases = d3.selectAll("#selDataset").property("value")
   demographyData(cases);
   barChart(cases);
   bubbleChart(cases);
